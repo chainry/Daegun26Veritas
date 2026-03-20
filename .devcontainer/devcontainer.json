@@ -1,19 +1,26 @@
 {
-  "name": "Veritas AI Study Environment",
-  // 1. 기본 이미지: 파이썬 3.10 버전이 설치된 환경을 사용합니다.
+  "name": "Veritas Software Study Environment",
   "image": "mcr.microsoft.com/devcontainers/python:3.10",
 
   "customizations": {
     "vscode": {
-      // 2. 부원들 화면에 자동으로 설치될 도구들입니다.
       "extensions": [
-        "ms-python.python",        // 파이썬 기본 지원
-        "ms-toolsai.jupyter",      // 데이터 분석 핵심! 주피터 노트북
-        "ms-python.vscode-pylint"  // 코드 문법 검사
-      ]
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylint"
+      ],
+      // 👇 이 부분을 추가하면 커널 진입장벽이 확 낮아집니다!
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "jupyter.askForKernelRestart": false,
+        "jupyter.notebookEditor.defaultKernel": "python3",
+        "python.terminal.activateEnvironment": true
+      }
     }
   },
 
-  // 3. 컨테이너가 생성된 후 실행할 명령입니다. (라이브러리 자동 설치)
-  "postCreateCommand": "pip install -r requirements.txt"
+  "postCreateCommand": "pip install -r requirements.txt",
+  
+  // 4. 컨테이너 내부 사용자 설정 (권한 문제 방지)
+  "remoteUser": "vscode"
 }
